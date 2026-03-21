@@ -1,0 +1,63 @@
+<SettingScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: [20, 40, 20, 20]
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Настройки"
+            font_style: "H4"
+            bold: True
+            adaptive_height: True
+            padding: [0, 0, 0, 20]
+
+        MDCard:
+            orientation: "vertical"
+            padding: ["10dp", "15dp", "10dp", "15dp"]
+            spacing: "5dp"
+            elevation: 0
+            size_hint_y: None
+            height: self.minimum_height
+            md_bg_color: 0.94, 0.96, 0.97, 1
+            radius: [15,]
+
+            CustomSettingItem:
+                text: "Профиль"
+                on_release: app.manager.current = "Profile"
+
+            CustomSettingItem:
+                text: "Уведомления от сервиса"
+                on_release: app.manager.current = "Notification"
+
+            CustomSettingItem:
+                text: "Безопасность"
+                on_release: app.manager.current = "Safety"
+
+            CustomSettingItem:
+                text: "О нашем сервисе"
+                on_release: app.manager.current = "About"
+
+        Widget:
+            size_hint_y: None
+            height: "10dp"
+
+
+        FRFButton:
+            text: "Пригласить друга"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            height: "50dp"
+            md_bg_color: 0.85, 0.92, 0.98, 1
+            text_color: 0.2, 0.4, 0.6, 1
+            elevation: 0
+            radius: [12, ]
+
+        FRFButton:
+            text: "Служба поддержки"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            height: "50dp"
+            md_bg_color: 0.94, 0.96, 0.97, 1
+            text_color: 0.3, 0.3, 0.3, 1
+            elevation: 0
+            radius: [12, ]
+            
+        Widget: 

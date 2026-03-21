@@ -1,0 +1,22 @@
+<TestListScreen>:
+    MDBoxLayout:
+        elevation: 1
+        orientation: "vertical"
+        padding: ["20dp", "40dp", "20dp", "90dp"]
+        spacing: "20dp"
+
+        MDLabel:
+            elevation: 1
+            text: "Тесты"
+            font_style: "H4"
+            bold: True
+            adaptive_height: True
+        ScrollView:
+            do_scroll_x: False
+            MDGridLayout:
+                id: tests_grid
+                cols: 1
+                adaptive_height: True
+                padding: "20dp"
+                spacing: "20dp"
+   

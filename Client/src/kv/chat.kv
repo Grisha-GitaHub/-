@@ -1,0 +1,19 @@
+<ChatScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: "Чат с ИИ"
+            left_action_items: [["arrow-left", lambda x: app.back_to_list()]]
+        ScrollView:
+            id: chat_scroll
+            MDBoxLayout:
+                id: chat_history
+                orientation: 'vertical'
+                adaptive_height: True
+        
+        MDBoxLayout:
+            adaptive_height: True
+            padding: "10dp"
+            PromtField:
+                id: chat_input
+                on_text_validate: app.send_message(self.text)

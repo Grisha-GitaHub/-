@@ -1,0 +1,43 @@
+
+
+
+<LoginScreen>:
+    MDFloatLayout:
+        MDLabel:
+            text: "Авторизация"
+            halign: "center"
+            pos_hint: {"center_y": .8}
+            
+        TextField:
+            id: email_field
+            hint_text: "Введите почту"
+            pos_hint: {"center_x": .5, "center_y":.615}   
+
+            
+        TextField:
+            id: password_field
+            password: True
+            hint_text: "Пароль"
+            max_text_length: 50
+            pos_hint: {"center_x": .5, "center_y": .5}
+        
+        FRFButton:
+            text: "Войти"
+            pos_hint: {"center_x": .5, "center_y": .4}
+            radius: [5, ]
+            on_release:
+                root.check_user()
+
+        FRFButton:
+            text: "Пропустить" # Потом сделать гостевой доступ
+            pos_hint: {"center_x": .5, "center_y": .3}
+            radius: [5, ]
+            on_release: root.manager.current = "Hello"
+
+        
+        MDTextButton:
+            text: "Нет аккаунта? [color=#004D73][u]Зарегистрироваться[/u][/color]"
+            pos_hint: {"center_x": .5, "center_y": .2}
+            markup: True
+            on_release: 
+                root.manager.current = "Registration"

@@ -1,0 +1,25 @@
+<DiaryNoteScreen>:
+    md_bg_color: 0.91, 0.94, 0.95, 1 
+    mode: "create" 
+    
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: "15dp"
+
+        MDTopAppBar:
+            title: "Заметка"
+            anchor_title: "left"
+            left_action_items: [["arrow-left", lambda x: root.back()]]
+            right_action_items: [["check", lambda x: root.save_and_back()]]
+            elevation: 1
+            md_bg_color: 0, 0, 0, 0
+            specific_text_color: 0, 0, 0, 1
+
+        MDTextField:
+            id: note_text
+            hint_text: "Начните писать здесь..."
+            multiline: True
+            mode: "fill"
+            fill_color_normal: 1, 1, 1, .5
+            size_hint_y: 1
+            radius: [10,]

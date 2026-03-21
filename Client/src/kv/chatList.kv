@@ -1,0 +1,33 @@
+<ChatListScreen>:
+    on_enter: app.load_chat_list()
+    MDBoxLayout:
+        orientation: "vertical"
+        # Уменьшаем внешние отступы, чтобы ScrollView был шире
+        padding: ["10dp", "40dp", "10dp", "80dp"] 
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Чаты"
+            font_style: "H4"
+            bold: True
+            adaptive_height: True
+            padding: ["10dp", 0] # Чтобы заголовок не прилипал к краю
+
+        ScrollView:
+            id: chat_scroll
+            # Важно: убираем обрезку теней, если это возможно в вашей версии KivyMD
+            bar_width: 0 
+            MDBoxLayout:
+                id: chat_container
+                orientation: "vertical"
+                adaptive_height: True
+                # ДОБАВЛЯЕМ ОТСТУПЫ СЛЕВА И СПРАВА ЗДЕСЬ
+                # Это даст место для теней карточек
+                padding: ["10dp", "10dp", "10dp", "10dp"] 
+                spacing: "15dp"
+    MDFloatingActionButton:
+        elevation: 1
+        icon: "plus"
+        md_bg_color: app.theme_cls.primary_color
+        pos_hint: {"right": .95, "y": .15}
+        on_release: app.create_and_open_new_chat()

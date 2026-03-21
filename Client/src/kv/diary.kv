@@ -1,0 +1,33 @@
+<DiaryScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: ["20dp", "40dp", "20dp", "90dp"]
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Дневник"
+            font_style: "H4"
+            bold: True
+            adaptive_height: True
+
+        MDLabel:
+            text: "Ваши записи:"
+            theme_text_color: "Secondary"
+            font_style: "Subtitle1"
+            adaptive_height: True
+
+        ScrollView:
+            MDBoxLayout:
+                id: diary_container
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: "15dp"
+                padding: ["4dp", "4dp", "4dp", "4dp"]
+
+    MDFloatingActionButton:
+        icon: "plus"
+        md_bg_color: app.theme_cls.primary_color
+        pos_hint: {"right": .95, "y": .15}
+        on_release: 
+            app.manager.get_screen("DiaryNote").mode = "create"
+            app.manager.current = "DiaryNote"

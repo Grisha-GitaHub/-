@@ -1,0 +1,29 @@
+<HelloScreen>:
+    MDFloatLayout:
+        # Основной заголовок
+        MDLabel:
+            text: "Как вы себя чувствуете?"
+            halign: "center"
+            bold: True
+            font_size: "26sp"
+            pos_hint: {"center_x": .5, "center_y": .75}
+
+        # Блок подсказки (стрелка + текст)
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: True
+            size_hint_x: 1         # Растягиваем на всю ширину, чтобы текст не переносился
+            spacing: "-10dp"       # Прижимаем текст ближе к стрелке
+            pos_hint: {"center_x": .5, "y": .05}
+
+            MDIcon:
+                icon: "chevron-up"
+                font_size: "42sp"
+                halign: "center"
+                pos_hint: {"center_x": .5}
+
+            MDLabel:
+                text: "Смахните вверх"
+                halign: "center"
+                font_size: "15sp"
+                theme_text_color: "Secondary"

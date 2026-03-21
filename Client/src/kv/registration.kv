@@ -1,0 +1,59 @@
+
+
+<RegistrationScreen>:
+    MDFloatLayout:
+        MDLabel:
+            text: "Регистрация"
+            halign: "center"
+            pos_hint: {"center_y": .8}
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: .8, None
+            height: self.minimum_height 
+            pos_hint: {"center_x": .5, "center_y": .5} 
+            spacing: "15dp"  
+            TextField:
+                id: username_field
+
+                hint_text: "Введите Имя"
+                max_text_length: 20
+                pos_hint: {"center_x": .5, "center_y":.74}  
+                
+                helper_text_mode: "on_error"
+                on_text: root.check_username(self.text)
+
+            TextField:
+                id: mail_field
+                hint_text: "Введите почту"
+                pos_hint: {"center_x": .5, "center_y":.6}
+                
+            TextField:
+                id: password_field
+                password: True
+                hint_text: "Пароль"      
+                helper_text_mode: "on_error"
+                on_text: root.check_password(self.text)
+                pos_hint: {"center_x": .5, "center_y": .48}
+        
+        FRFButton:
+            text: "Получить код"
+            pos_hint: {"center_x": .5, "center_y": .2}
+            radius: [5, ]
+            on_release: root.request_code() 
+        
+        FRFButton:
+            text: "Экран подклчюения"
+            pos_hint: {"center_x": .5, "center_y": .15}
+
+            radius: [5, ]
+            on_release: root.manager.current = "IPConn"
+
+        MDTextButton:
+            text: "Уже есть аккаунт? [color=#004D73][u]Войти[/u][/color]"
+            pos_hint: {"center_x": .5, "center_y": .1}
+            markup: True
+            on_release: 
+                root.manager.current = "Login"
+
+
+

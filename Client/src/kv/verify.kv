@@ -1,0 +1,25 @@
+<TextField@MDTextField>:
+    mode: "rectangle"
+    radius: [15, 15, 15, 15]  # ИСПРАВЛЕНО
+    size_hint_x: .8
+    elevation: 0              # ДОБАВЛЕНО (для безопасности)
+
+<VerifyScreen>:
+    MDFloatLayout:
+        MDLabel:
+            text: "Подтверждение входа"
+            halign: "center"
+            pos_hint: {"center_y": .8}
+            
+        TextField:
+            id: code_field
+            hint_text: "Введите 4-ех значный код"
+            pos_hint: {"center_x": .5, "center_y":.615}   
+        
+        MDFillRoundFlatButton:
+            text: "Войти"
+            pos_hint: {"center_x": .5, "center_y": .4}
+            size_hint_x: .6
+            radius: [5, 5, 5, 5]     # ИСПРАВЛЕНО
+            elevation: 0             # ДОБАВЛЕНО
+            on_release: root.confirm_registration() # Проверь имя метода в py

@@ -1,0 +1,80 @@
+#:import Window kivy.core.window.Window
+#:import dp kivy.metrics.dp
+
+<GeneralScreen>:
+    md_bg_color: 0.91, 0.94, 0.95, 1 
+
+    MDFloatLayout:
+        size_hint: 1, 1
+
+        # 1. Кнопка (самый нижний слой)
+        FRFButton:
+            text: "О чем вы хотите поговорить?"
+            pos_hint: {"center_x": .5, "top": .92}
+            on_release: app.create_and_open_new_chat()
+
+        # 2. Карточка (средний слой)
+        MDCard:
+            orientation: "vertical"
+            size_hint: None, None
+            width: min(Window.width * 0.75, dp(600))
+            height: self.minimum_height 
+            pos_hint: {"center_x": .5, "center_y": .5}
+            radius: [25, ]
+            md_bg_color: 0.58, 0.67, 0.72, 1
+            elevation: 1
+            padding: ["20dp", "30dp", "20dp", "30dp"]
+            spacing: "20dp"
+
+            MDLabel:
+                text: "Понимаете, что не можете совладать со своими мыслями или чувствами?"
+                halign: "center"
+                font_style: "H6"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 0.5
+                line_height: 1.2
+                adaptive_height: True
+
+            MDLabel:
+                text: "Горячая линия:\n+7(999)999-99-99"
+                halign: "center"
+                font_style: "Subtitle1"
+                bold: True
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 0.5
+                adaptive_height: True
+
+            MDLabel:
+                text: "Мы рядом с вами"
+                halign: "center"
+                font_style: "Body1"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 0.5
+                adaptive_height: True
+
+        # 3. КРУГИ ПОВЕРХ КАРТОЧКИ (верхний слой)
+        Image:
+            source: "src/assets/figure/LCircle.png"
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"x": 0, "center_y": .5}
+            opacity: 0.6  # Чтобы карточка просвечивала
+
+        Image:
+            source: "src/assets/figure/RCircle.png"
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"right": 1, "center_y": .7}
+            opacity: 0.6  # Чтобы карточка просвечивала
+
+        # 4. Текст и Меню (самый верх, чтобы были видны всегда)
+        MDLabel:
+            text: "Вы справитесь со всеми трудностями"
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .12}
+            theme_text_color: "Secondary"
+            font_style: "Caption"
+            adaptive_height: True
+
+        CustomBottomMenu:
+            id: bottom_nav

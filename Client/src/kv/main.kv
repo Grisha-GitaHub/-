@@ -1,0 +1,434 @@
+#:import Window kivy.core.window.Window
+#:import dp kivy.metrics.dp
+#:import Factory kivy.factory.Factory
+
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+#:include src/kv/IpConnection.kv
+#:include src/kv/registration.kv
+#:include src/kv/login.kv
+#:include src/kv/hello.kv
+#:include src/kv/verify.kv
+#:include src/kv/general.kv
+#:include src/kv/chatList.kv
+#:include src/kv/testList.kv
+#:include src/kv/profile.kv
+#:include src/kv/diary.kv
+#:include src/kv/setting.kv
+#:include src/kv/chat.kv
+#:include src/kv/test.kv
+#:include src/kv/diaryNote.kv
+#:include src/kv/about.kv
+#:include src/kv/safety.kv
+#:include src/kv/notification.kv
+
+<TextField@MDTextField>:
+    elevation: 1
+    mode: "rectangle"
+    radius: [15, 15, 15, 15]
+    size_hint: .9, None
+    background_color: "white"
+
+<PromtField@MDTextField>:
+    mode: "round"
+    elevation: 1
+    fill_color_normal: 0.44, 0.62, 0.75, 1
+    radius: [25, 25, 25, 25]
+    multiline: True
+    multiline: True
+    write_tab: False
+    input_type: 'text'
+    size_hint_y: None
+    height: self.minimum_height
+    max_height: "150dp"
+
+    hint_text: "О чем вы хотите поговорить?"
+    hint_text_color_normal: 0.53, 0.81, 0.98, 1
+    hint_text_color_focus: 0, 0, 0, 0
+
+    text_color_normal: 0, 0, 0, 0.5
+    text_color_focus: 0, 0, 0, 0.5
+
+    line_color_normal: 0, 0, 0, 0.5
+    line_color_focus: 0, 0, 0, 0.5
+    set_helper_text_focus: False 
+    
+<FRFButton@MDFillRoundFlatButton>:
+    size_hint_x: None
+    elevation: 1
+    width: "260dp" if Window.width > dp(400) else Window.width * 0.65
+
+<CustomBottomMenu@MDCard>:
+    on_kv_post: app.register_bottom_menu(self)
+    size_hint: (None, None) if Window.width > dp(400) else (1, None)
+    height: "65dp"
+    width: "380dp" if Window.width > dp(600) else Window.width
+    
+    pos_hint: {"center_x": .5}
+    radius: [20, 20, 20, 20]
+    md_bg_color: 0.7, 0.8, 0.9, 1
+    elevation: 1
+    padding: [10, 0, 10, 0]
+    opacity: 0
+    disabled: True
+
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        MDBoxLayout:
+            spacing: "20dp"
+            adaptive_size: True            
+            pos_hint: {"center_x": .5, "center_y": .5} 
+            MDIconButton:
+                icon: "chat-outline"
+                pos_hint: {"center_y": .5}
+                on_release: 
+                    app.root.ids.screen_manager.transition = SwapTransition(duration=0.5)
+                    app.root.ids.screen_manager.current = "ChatList"
+
+            MDIconButton:
+                icon: "note-text-outline"
+                pos_hint: {"center_y": .5}
+                on_release: 
+                    app.root.ids.screen_manager.transition = SwapTransition(duration=0.3)
+                    app.root.ids.screen_manager.current = "Tests"
+
+            
+            MDCard:
+                size_hint: None, None
+                size: "50dp", "50dp"
+                radius: [25, ]  # Круглая форма (половина от size)
+                md_bg_color: 0.3, 0.4, 0.5, 1
+                elevation: 0
+                pos_hint: {"center_y": .8}
+                on_release: 
+                    app.root.ids.screen_manager.transition = SwapTransition(duration=0.3)
+                    app.root.ids.screen_manager.current = "Profile"
+                
+                FitImage:
+                    id: bottom_avatar
+                    source: app.user_avatar_path
+                    nocache: True
+                    radius: [25, ]
+
+            MDIconButton:
+                icon: "star-outline"
+                pos_hint: {"center_y": .5}
+                on_release:
+                    app.root.ids.screen_manager.transition = SwapTransition(duration=0.3)
+                    app.root.ids.screen_manager.current = "Diary"
+
+            MDIconButton:
+                icon: "cog-outline"
+                pos_hint: {"center_y": .5}
+                on_release: 
+                    app.root.ids.screen_manager.transition = SwapTransition(duration=0.3)
+                    app.root.ids.screen_manager.current = "Setting"
+
+<ChatListItem@MDCard>:
+    title: ""
+    chat_id: ""
+    padding: "10dp"
+    size_hint_y: None
+    height: "72dp"
+    elevation: 1
+    radius: [15,] 
+    on_release: app.open_existing_chat(root.chat_id)
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        MDLabel:
+            text: root.title
+            valign: "center"
+        MDIconButton:
+            icon: "dots-vertical"
+            on_release: app.show_edit_dialog(root.chat_id, root.title)
+
+<TestCard@MDCard>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "120dp"
+    padding: "15dp"
+    radius: [15, 15, 15, 15]
+    ripple_behavior: True
+    
+    # Объявляем переменные, которые передаем из Python
+    title: ""
+    test_id: ""
+    description: ""
+
+    MDLabel:
+        text: root.title
+        font_style: "H6"
+        adaptive_height: True
+    
+    MDLabel:
+        text: root.description
+        theme_text_color: "Secondary"
+        font_style: "Body2"
+
+<EditChatContent@MDBoxLayout>:
+    orientation: "vertical"
+    adaptive_height: True
+    padding: "10dp"
+    spacing: "10dp"
+    
+    MDTextField:
+        id: rename_field
+        hint_text: "Новое название"
+        mode: "rectangle"
+        radius: [10, 10, 10, 10] # ДОБАВИТЬ 
+
+<DiaryItem@MDCard>:
+    orientation: "horizontal"
+    padding: "16dp"
+    size_hint_y: None
+    height: "80dp"
+    elevation: 1
+    radius: [15, ]
+    spacing: "10dp"
+    ripple_behavior: True
+    
+    # Свойства для данных
+    date: ""
+    text: ""
+    note_id: ""
+
+    MDBoxLayout:
+        orientation: "vertical"
+        # Клик по тексту открывает заметку
+        on_touch_down: if self.collide_point(*args[1].pos): root.dispatch('on_release')
+
+        MDLabel:
+            text: root.date
+            font_style: "Caption"
+            theme_text_color: "Secondary"
+            adaptive_height: True
+
+        MDLabel:
+            text: root.text
+            font_style: "Subtitle1"
+            shorten: True
+            shorten_from: "right"
+            max_lines: 1
+            adaptive_height: True
+
+    MDIconButton:
+        icon: "delete-outline"
+        pos_hint: {"center_y": .5}
+        theme_text_color: "Custom"
+        text_color: 1, 0, 0, .7
+        on_release: app.manager.get_screen("Diary").delete_note(root.note_id)
+
+<CustomSettingItem@ButtonBehavior+MDBoxLayout>:
+    text: ""
+    size_hint_y: None
+    height: "48dp"
+    padding: ["10dp", 0, "10dp", 0]
+    spacing: "15dp"
+    md_bg_color: 0, 0, 0, 0  # Прозрачный фон, чтобы не перекрывать карточку
+
+    MDLabel:
+        text: root.text
+        font_style: "Body1"
+        theme_text_color: "Primary"
+        halign: "left"
+
+    MDIcon:
+        icon: "chevron-right"
+        pos_hint: {"center_y": .5}
+        theme_text_color: "Secondary"
+        size_hint_x: None
+        width: self.texture_size[0]
+
+<ResultCard@MDCard>:
+    # Свойства, которые мы будем передавать из Python
+    winner_name: ""
+    description_text: ""
+    
+    orientation: 'vertical'
+    padding: "20dp"
+    spacing: "15dp"
+    size_hint: 0.9, None
+    height: "380dp"
+    pos_hint: {"center_x": .5, "center_y": .5}
+    radius: 25
+    elevation: 3
+    md_bg_color: 0.95, 0.98, 1, 1
+    opacity: 0  # Для анимации
+
+    MDIcon:
+        icon: "account-search-outline"
+        halign: "center"
+        font_size: "64sp"
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+
+    MDLabel:
+        text: root.winner_name
+        halign: "center"
+        font_style: "H4"
+        bold: True
+        adaptive_height: True
+
+    MDLabel:
+        text: root.description_text
+        halign: "center"
+        font_style: "Body1"
+        theme_text_color: "Secondary"
+        adaptive_height: True
+
+    Widget: # Пружина, чтобы кнопка была внизу
+
+    MDFillRoundFlatButton:
+        text: "ЗАВЕРШИТЬ"
+        pos_hint: {"center_x": .5}
+        # Вызываем метод экрана через app
+        on_release: app.root.ids.screen_manager.get_screen("Test").back_to_tests()
+
+<UserBubble@MDBoxLayout>:
+    text: ""
+    adaptive_height: True
+    orientation: 'vertical'
+    padding: "10dp"
+    spacing: "5dp"
+    pos_hint: {"right": 1}
+    size_hint_x: 0.8  # Чтобы облачко не растягивалось на весь экран
+
+    MDCard:
+        adaptive_height: True
+        md_bg_color: app.theme_cls.primary_color
+        radius: [20, 20, 0, 20]  # Закругляем все углы, кроме нижнего правого
+        padding: "12dp"
+        elevation: 1
+
+        MDLabel:
+            text: root.text
+            adaptive_height: True
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1  # Белый текст на основном цвете
+            font_style: "Body1"
+
+<AiMessage@MDBoxLayout>:
+    # Убираем внешние отступы и привязку к левому краю
+    adaptive_height: True
+    orientation: 'vertical'
+    padding: ["20dp", "10dp"] 
+    pos_hint: {"center_x": .5}  # Центрируем весь контейнер
+    size_hint_x: 0.9           # Даем тексту больше пространства
+
+    # Вместо MDCard оставляем только Label
+    MDLabel:
+        id: label_text
+        text: ""
+        adaptive_height: True
+        theme_text_color: "Primary"
+        font_style: "Body1"
+        
+        # Центрирование текста
+        halign: "left"       
+        valign: "middle"
+        
+        # Важно для корректного переноса и центрирования:
+        text_size: self.width, None
+
+<ProfileMenuItem@MDCard>:
+    text: ""
+    adaptive_height: True
+    padding: ["12dp", "10dp"]
+    elevation: 0
+    md_bg_color: 0, 0, 0, 0
+    ripple_behavior: True
+    # Вызываем метод из главного приложения (MDApp)
+    on_release: app.show_section_dialog(root.text)
+
+    MDLabel:
+        text: root.text
+        font_style: "Subtitle1"
+        theme_text_color: "Primary"
+        adaptive_height: True
+
+<OptionCard@MDCard>:
+    orientation: "vertical"
+    padding: "12dp"
+    size_hint_y: None
+    adaptive_height: True
+    ripple_behavior: True
+    radius: [10, ]
+    md_bg_color: 0.12, 0.58, 0.95, 1
+    
+    # Кастомное свойство для текста
+    option_text: ""
+
+    MDLabel:
+        text: root.option_text
+        theme_text_color: "Custom"
+        text_color: 1, 1, 1, 1
+        halign: "center"
+        adaptive_height: True
+
+
+MDFloatLayout:
+    canvas.before:
+        Rectangle:
+            source: "src/assets/img/BaseImgBG.jpg"
+            pos: self.pos 
+            size: self.size
+    ScreenManager:
+        id: screen_manager
+        on_current: app.update_menu_visibility(self.current)
+        IpConnectionScreen:
+            name: "IPConn"
+        RegistrationScreen:
+            name: "Registration"
+        LoginScreen:
+            name: "Login"
+        HelloScreen:
+            name: "Hello"
+        VerifyScreen:
+            name: "Verify"
+        GeneralScreen:
+            name: "General"
+            
+        ChatListScreen:
+            name: "ChatList"
+            
+        TestListScreen:
+            name: "Tests"
+            
+        ProfileScreen:
+            name: "Profile"
+            
+        DiaryScreen:
+            name: "Diary"
+            
+        SettingScreen:
+            name: "Setting"
+
+        ChatScreen:
+            name: "Chat"
+
+        TestScreen:
+            name: "Test"
+
+        DiaryNoteScreen:
+            name: "DiaryNote"
+
+        NotificationScreen:
+            name: "Notification"
+
+        SafetyScreen:
+            name: "Safety"
+
+        AboutScreen:
+            name: "About"
+    
+    CustomBottomMenu:   
+        id: bottom_nav
+        

@@ -1,0 +1,23 @@
+<TestScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "20dp"
+        spacing: "20dp"
+
+        MDLabel:
+            id: question_label
+            text: "Загрузка..."
+            halign: "center"
+            font_style: "H5"
+            adaptive_height: True # Добавлено, чтобы текст вопроса не забирал лишнее место
+
+        MDBoxLayout:
+            id: options_box
+            orientation: "vertical"
+            spacing: "15dp"
+            size_hint_x: 1        # Контейнер на всю ширину
+            adaptive_height: True # Высота подстроится под количество кнопок
+            pos_hint: {"center_x": .5}
+
+        Widget: # Пружина, выталкивающая всё наверх
+            size_hint_y: 1

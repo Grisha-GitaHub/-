@@ -1,0 +1,43 @@
+<IpConnectionScreen>:
+    MDFloatLayout:
+
+
+        MDTextField:
+            id: ip_field
+            size_hint_x: .5
+            pos_hint: {"center_x": .5, "center_y": .7} 
+
+            hint_text: "Введите адрес"
+            helper_text: "Стандартный ip: 192.168.1.x"
+            helper_text_mode: "on_focus"
+
+
+        MDTextField:
+            id: port_field
+            size_hint_x: .5
+            pos_hint: {"center_x": .5, "center_y": .6}
+            hint_text: "Введите порт"
+            helper_text: "Обычно 8000"
+            helper_text_mode: "on_focus"
+            input_filter: "int"
+
+        MDLabel:
+            text: root.status_text
+            halign: "center"
+            pos_hint: {"center_y": .5}
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            bold: True
+
+        MDFillRoundFlatButton:
+            text: "Подключится"
+            pos_hint: {"center_x": .5, "center_y": .4}
+            size_hint_x: .5
+            on_release: 
+                root.start_check(f"{ip_field.text}:{port_field.text}")
+        MDFillRoundFlatButton:
+            text: "Пропусить"
+            pos_hint: {"center_x": .5, "center_y": .2}
+            size_hint_x: .5
+            on_release: 
+                root.manager.current = "Registration"

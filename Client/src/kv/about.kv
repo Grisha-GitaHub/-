@@ -1,0 +1,52 @@
+<AboutScreen>:
+    MDCard:
+        orientation: "vertical"
+        size_hint: None, None
+        width: min(Window.width * 0.75, dp(600))
+        height: self.minimum_height 
+        pos_hint: {"center_x": .5, "center_y": .5}
+        radius: [25, ]
+        md_bg_color: 0.58, 0.67, 0.72, 1
+        elevation: 1
+        padding: ["20dp", "30dp", "20dp", "30dp"]
+        spacing: "20dp"
+
+        MDLabel:
+            text: "Full stack - Григорий Бурда"
+            halign: "center"
+            font_style: "H6"
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 0.5
+            line_height: 1.2
+            adaptive_height: True
+
+        MDLabel:
+            text: "Дизайнер - Алина Недоступова"
+            halign: "center"
+            font_style: "H6"
+            bold: True
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 0.5
+            adaptive_height: True
+
+        MDLabel:
+            text: "Тестировщик - Станислав Федосеев"
+            halign: "center"
+            font_style: "H6"
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 0.5
+            adaptive_height: True
+        
+        MDLabel:
+            text: "Течнический писатель - Алловиддин Батиров"
+            halign: "center"
+            font_style: "H6"
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 0.5
+            adaptive_height: True
+        
+    CustomSettingItem:
+        text: "Назад"
+        pos_hint: {"center_x": .5, "center_y": .9}
+        on_release: app.manager.current = "Profile"
+        

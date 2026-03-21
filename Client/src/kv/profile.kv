@@ -1,0 +1,74 @@
+<ProfileScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: ["24dp", "60dp", "24dp", "110dp"]
+        spacing: "24dp"
+
+        # 1. ЗАГОЛОВОК (всегда сверху)
+        MDLabel:
+            text: "Профиль"
+            font_style: "H4"
+            bold: True
+            adaptive_height: True
+            theme_text_color: "Primary"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            spacing: "20dp"
+
+# Блок аватара
+            MDCard:
+                size_hint: None, None
+                size: "80dp", "80dp"
+                radius: [20, ]
+                elevation: 0
+                on_release: app.choose_avatar()
+                
+                FitImage:
+                    id: avatar
+                    # Привязываем к свойству в приложении
+                    source: app.user_avatar_path 
+                    # Разрешаем обновление без кэша
+                    nocache: True
+                    radius: [20, ]
+
+            # Блок текста справа
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                pos_hint: {"center_y": .5}
+                
+                MDLabel:
+                    id: user_name_label  # <-- Сюда упадет имя
+                    text: ""
+                    font_style: "H5"
+                    bold: True
+                    adaptive_height: True
+
+        # 3. СПИСОК МЕНЮ
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "10dp"
+            adaptive_height: True
+            
+            ProfileMenuItem:
+                text: "Ваши сессии"
+            ProfileMenuItem:
+                text: "История сессий"
+            ProfileMenuItem:
+                text: "Выбор специалиста"
+            ProfileMenuItem:
+                text: "Горячая линия"
+
+        # 4. ПРУЖИНА (занимает всё свободное место, выталкивая кнопку вниз)
+        Widget: 
+
+        # 5. КНОПКА (благодаря пружине выше и padding снизу встанет идеально)
+        MDFillRoundFlatButton:
+            text: "Редактировать профиль"
+            pos_hint: {"center_x": .5}
+            md_bg_color: 0.44, 0.62, 0.75, 1
+            size_hint_x: 0.9
+            height: "50dp"
+            on_release: app.show_edit_name_dialog()
